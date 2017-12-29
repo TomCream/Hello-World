@@ -25,9 +25,13 @@ workspaces目录下必须包含如下的目录结构（必须要有这3个文件
 \pkg contains package objects, and
 \bin contains executable commands.
 ```
+
 ### import paths
-导入路径是唯一确定一个包的导入路径。(类似java的import package)。/src下面可以有多个包，每个包是一个go工程，每个包有独立的版本控制管理。所有工程
-编译的命令都放在\bin目录下，所有工程产生的lib都放在\pkg中。
+导入路径是唯一确定一个包的导入路径。
+
+
+(类似java的import package)。\src下面可以有多个包，每个包是一个go工程，每个包有独立的版本控制管理。所有工程编译的命令都放在\bin目录下，所有工程产生的lib都放在\pkg中。
+
 ---
 [go和其他语言的不同(Java)](/doc/diff.md)
 
