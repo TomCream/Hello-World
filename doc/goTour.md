@@ -52,3 +52,34 @@ func main() {
 ```
 #### result
 ![slicePic](../img/slicePic.png)
+
+### 练习：map
+```
+package main
+
+import (
+	"golang.org/x/tour/wc"
+	"strings"
+)
+
+func WordCount(s string) map[string]int {
+	result := make(map[string]int)
+	stringList := strings.Fields(s)
+	for _,value := range stringList {
+		v,flag :=  result[value]
+		if flag {
+			result[value] = v+1
+		} else {
+			result[value] = 1
+		}
+	}
+	return result
+}
+
+func main() {
+	wc.Test(WordCount)
+}
+```
+#### result
+![mapPic](../img/mapPic.png)
+
