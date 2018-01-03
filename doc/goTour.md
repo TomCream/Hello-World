@@ -199,6 +199,6 @@ func main() {
 }
 ```
 #### result
-![read](../img/read.png)
+![read](../img/reader.png)
 
 
