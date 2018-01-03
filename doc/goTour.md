@@ -25,7 +25,7 @@ func main() {
 }
 ```
 
-### 练习：slice
+### 练习2：slice
 ```
 package main
 
@@ -53,7 +53,7 @@ func main() {
 #### result
 ![slicePic](../img/slicePic.png)
 
-### 练习：map
+### 练习3：map
 ```
 package main
 
