@@ -137,3 +137,43 @@ func main() {
 ```
 #### resutl
 ![stringers](../img/stringers.png)
+
+### 练习6 错误
+```
+package main
+
+import (
+	"fmt"
+)
+
+type ErrNegativeSqrt float64
+
+var z float64 = 1
+
+func (e ErrNegativeSqrt) Error() string {
+	return fmt.Sprint("cannot Sqrt negative number:",float64(e))
+}
+
+func Sqrt(x float64) (float64, error) {
+	if x < 0 {
+		var err ErrNegativeSqrt = ErrNegativeSqrt(x)
+		return x, err
+	}
+	var old float64 = 0
+	var dis float64 = z - old
+	for dis > 0.1 || dis < -0.1 {
+		old = z
+		z = z - (z*z-x)/2*z
+		fmt.Println(z)
+		dis = z - old
+	}
+	return z, nil
+}
+
+func main() {
+	fmt.Println(Sqrt(2))
+	fmt.Println(Sqrt(-2))
+}
+```
+#### result
+![error](../img/error.png)
