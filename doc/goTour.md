@@ -51,5 +51,4 @@ func main() {
 }
 ```
 #### result
-
-(slicePic)[../img/slicePic.png]
+![slicePic](../img/slicePic.png)
