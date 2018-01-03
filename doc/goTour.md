@@ -177,3 +177,28 @@ func main() {
 ```
 #### result
 ![error](../img/error.png)
+
+### 练习7 Reader
+```
+package main
+
+import "golang.org/x/tour/reader"
+
+type MyReader struct{}
+
+// TODO: Add a Read([]byte) (int, error) method to MyReader.
+func (v MyReader) Read(b []byte) (int, error) {
+	for index,_ := range b {
+		b[index] = 65
+	}
+	return len(b), nil
+}
+
+func main() {
+	reader.Validate(MyReader{})
+}
+```
+#### result
+![read](../img/read.png)
+
+
