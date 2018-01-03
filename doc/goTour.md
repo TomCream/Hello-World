@@ -1,4 +1,4 @@
-## 练习1：循环和函数
+### 练习1：循环和函数
 ```
 package main
 
@@ -24,3 +24,32 @@ func main() {
 	fmt.Println(math.Sqrt(2))
 }
 ```
+
+### 练习：slice
+```
+package main
+
+import "golang.org/x/tour/pic"
+
+func Pic(dx, dy int) [][]uint8 {
+	result := make([][]uint8,dy)
+	for x,_ := range result {
+		result[x] = make([]uint8,dx)
+		for y,_ := range result[x]{
+			//intValue := (x+y)/2
+			//intValue := x*y
+			//intValue := x^y
+			intValue := 2*x+3*y
+			result[x][y] = uint8(intValue)
+		}
+	}
+	return result
+}
+
+func main() {
+	pic.Show(Pic)
+}
+```
+#### result
+
+(slicePic)[../img/slicePic.png]
