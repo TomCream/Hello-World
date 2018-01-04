@@ -297,4 +297,4 @@ func main() {
 }
 ```
 ### result
-![bufferChannel](../img/bufferChannel.png)
+![bufferChanel](../img/bufferChanel.png)
