@@ -201,4 +201,39 @@ func main() {
 #### result
 ![read](../img/reader.png)
 
+### 练习8 rot13Reader
+```
+package main
 
+import (
+	"io"
+	"os"
+	"strings"
+)
+
+type rot13Reader struct {
+	r io.Reader
+}
+
+func (rot rot13Reader) Read(b []byte) (int, error) {
+	r := rot.r
+	n, err := r.Read(b)
+	for index, _ := range b {
+		if 65 <= b[index] && b[index] <= 90 {
+			b[index] = (b[index] - 65 + 13) % 26 + 65
+		}
+		if 97 <= b[index] && b[index] <= 122 {
+			b[index] = (b[index] - 97 + 13) % 26 + 97
+		}
+	}
+	return n, err
+}
+
+func main() {
+	s := strings.NewReader("Lbh penpxrq gur pbqr!")
+	r := rot13Reader{s}
+	io.Copy(os.Stdout, &r)
+}
+```
+#### result
+![rot13Reader](../img/rot13Reader.png)
