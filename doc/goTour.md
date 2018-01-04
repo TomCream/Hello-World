@@ -237,3 +237,9 @@ func main() {
 ```
 #### result
 ![rot13Reader](../img/rot13Reader.png)
+
+### 练习9 http处理
+[代码](../http/exercise-http-handlers.go)
+#### result
+![stringHttp](../img/stringHttp.png)   
+![structHttp](../img/structHttp.png)
