@@ -277,3 +277,24 @@ func main() {
 ```
 #### result
 ![img](../img/img.png)
+
+### 练习11 缓冲channel
+```
+package main
+
+import "fmt"
+
+func main() {
+	ch := make(chan int, 2)
+	ch <- 1
+	ch <- 2
+	//填满死锁
+	//ch <- 3
+	fmt.Println(<-ch)
+	fmt.Println(<-ch)
+	//取完了还取死锁
+	//fmt.Println(<-ch)
+}
+```
+### result
+![bufferChannel](../img/bufferChannel.png)
