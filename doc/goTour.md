@@ -243,3 +243,37 @@ func main() {
 #### result
 ![stringHttp](../img/stringHttp.png)   
 ![structHttp](../img/structHttp.png)
+
+### 练习10 图片
+```
+package main
+
+import "golang.org/x/tour/pic"
+import "image/color"
+import "image"
+
+type Image struct{}
+
+func (img Image) ColorModel() color.Model {
+	return color.RGBAModel
+}
+
+func (img Image) Bounds() image.Rectangle {
+	return image.Rect(0, 0, 255, 255)
+}
+
+func (img Image) At(x, y int) color.Color {
+	//v := (x+y)/2
+	v := x*y
+	//v := x^y
+	//v := 2*x + 3*y
+	return color.RGBA{uint8(v), uint8(v), 255, 255}
+}
+
+func main() {
+	m := Image{}
+	pic.ShowImage(m)
+}
+```
+#### result
+![img](../img/img.png)
