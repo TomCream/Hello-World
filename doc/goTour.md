@@ -354,3 +354,113 @@ func main() {
 #### result
 ![tree](../img/tree.png)
 
+### 练习13 网络爬虫
+```
+package main
+
+import (
+	"fmt"
+	"sync"
+)
+
+type Fetcher interface {
+	// Fetch 返回 URL 的 body 内容，并且将在这个页面上找到的 URL 放到一个 slice 中。
+	Fetch(url string) (body string, urls []string, err error)
+}
+
+type SafeCounter struct {
+	v   map[string]int
+	mux sync.Mutex
+}
+
+var m = SafeCounter{v: make(map[string]int)}
+var g sync.WaitGroup
+
+// Crawl 使用 fetcher 从某个 URL 开始递归的爬取页面，直到达到最大深度。
+func Crawl(url string, depth int, fetcher Fetcher) {
+	// TODO: 并行的抓取 URL。
+	defer g.Done()
+	// TODO: 不重复抓取页面。
+	// 下面并没有实现上面两种情况：
+	if depth <= 0 {
+		return
+	}
+	// 查看当前url是否被访问过,加同步
+	m.mux.Lock()
+	if _, s := m.v[url]; s {
+		m.mux.Unlock()
+		return
+	}
+	m.v[url] = 1
+	m.mux.Unlock()
+	body, urls, err := fetcher.Fetch(url)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Printf("found: %s %q\n", url, body)
+	for _, u := range urls {
+		g.Add(1)
+		go Crawl(u, depth-1, fetcher)
+		//关键如何解决父线程要等子线程结束后才能返回
+		//java里有CountDownLatch，go里面有[sync.WaitGroup或channel](https://www.douban.com/note/484590266/)
+	}
+}
+
+func main() {
+	g.Add(1)
+	go Crawl("http://golang.org/", 4, fetcher)
+	g.Wait()
+}
+
+// fakeFetcher 是返回若干结果的 Fetcher。
+type fakeFetcher map[string]*fakeResult
+
+type fakeResult struct {
+	body string
+	urls []string
+}
+
+func (f fakeFetcher) Fetch(url string) (string, []string, error) {
+	if res, ok := f[url]; ok {
+		return res.body, res.urls, nil
+	}
+	return "", nil, fmt.Errorf("not found: %s", url)
+}
+
+// fetcher 是填充后的 fakeFetcher。
+var fetcher = fakeFetcher{
+	"http://golang.org/": &fakeResult{
+		"The Go Programming Language",
+		[]string{
+			"http://golang.org/pkg/",
+			"http://golang.org/cmd/",
+		},
+	},
+	"http://golang.org/pkg/": &fakeResult{
+		"Packages",
+		[]string{
+			"http://golang.org/",
+			"http://golang.org/cmd/",
+			"http://golang.org/pkg/fmt/",
+			"http://golang.org/pkg/os/",
+		},
+	},
+	"http://golang.org/pkg/fmt/": &fakeResult{
+		"Package fmt",
+		[]string{
+			"http://golang.org/",
+			"http://golang.org/pkg/",
+		},
+	},
+	"http://golang.org/pkg/os/": &fakeResult{
+		"Package os",
+		[]string{
+			"http://golang.org/",
+			"http://golang.org/pkg/",
+		},
+	},
+}
+```
+#### result
+![net](../img/net.png)
