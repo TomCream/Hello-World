@@ -297,7 +297,7 @@ func main() {
 }
 ```
 ### result
-![bufferChannel](../img/bufferChannel.png)
+![bufferChanel](../img/bufferChanel.png)
 
 ### 练习12 等价二叉树
 ```
@@ -353,3 +353,4 @@ func main() {
 ```
 #### result
 ![tree](../img/tree.png)
+
